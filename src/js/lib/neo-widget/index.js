@@ -29,7 +29,7 @@ export default class NeoWidget {
 
   static delegator = DOMDelegator({ document: document });
 
-  static jsx = function (jsxObject) {
+  static jsx(jsxObject) {
     const Component = window[jsxObject.elementName];
     if ((typeof Component === 'function') && (Component.neo === true)) {
       jsxObject.parent = this;
@@ -40,7 +40,7 @@ export default class NeoWidget {
     return h(jsxObject.elementName, jsxObject.attributes, jsxObject.children);
   };
 
-  static _defaults = function () {
+  static _defaults() {
     return {
       elementName: 'DIV',
       type: 'Widget',
