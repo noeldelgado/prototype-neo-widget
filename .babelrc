@@ -1,0 +1,7 @@
+{
+  "presets": ["es2015-rollup"],
+  "plugins": [
+    "transform-class-properties",
+    ["transform-jsx", {"function":"NeoWidget.jsx.bind(this)"}]
+  ]
+}

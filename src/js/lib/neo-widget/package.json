@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "neo-widget",
+  "version": "0.0.1",
+  "description": "Virtual DOM implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Noel Delgado <auhcsei@gmail.com> (http://pixelia.me)",
+  "license": "MIT"
+}

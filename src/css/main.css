@@ -1,0 +1,33 @@
+@import "basscss";
+
+:root {
+  font-size: 11px;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {margin: 0}
+
+.red {color: red}
+.green {color: green}
+.blue {color: dodgerblue}
+
+.sample-box {
+  border: 1px solid;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.sample-info {
+  margin: 0 0 1rem;
+  padding: 1rem;
+  list-style: none;
+  background: #f0f0f0;
+}
+
+.sample-code {
+  margin: 1rem 0 0;
+  padding: 1rem;
+  background: #333;
+  color: #90EE90;
+}
