@@ -105,6 +105,13 @@ export default class NeoWidget {
    * @param domNode {DOMElement} The HTMLElement associated with the widget that will be removed
    */
   destroy(domNode) {
+    // delete container state by widget keyPath if exists
+    const container = this._getContainer();
+    const keyPath = this._getKeyPath();
+    if (container.state[keyPath]) {
+      delete container.state[keyPath];
+    }
+
     this.virtualNode = null;
     this.element = null;
   }
