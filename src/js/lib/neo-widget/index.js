@@ -34,6 +34,11 @@ export default class NeoWidget {
     if ((typeof Component === 'function') && (Component.neo === true)) {
       jsxObject.parent = this;
       jsxObject.props = jsxObject.attributes;
+
+      if (jsxObject.attributes.key) {
+        jsxObject.key = jsxObject.props.key;
+      }
+
       return new Component(jsxObject);
     }
 
