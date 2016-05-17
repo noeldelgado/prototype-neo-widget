@@ -8,10 +8,6 @@ export default class Avatar extends NeoWidget {
     };
   }
 
-  constructor(config) {
-    super(config);
-  }
-
   template() {
     const { src, size, className = '' } = this.props;
     const _className = 'inline-block ' + className;

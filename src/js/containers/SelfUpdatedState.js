@@ -2,10 +2,6 @@ import NeoWidget from '../lib/neo-widget';
 import ListItemState from '../components/ListItemState';
 
 export default class SelfContainedWidgets extends NeoWidget {
-  constructor(config) {
-    super(config);
-  }
-
   getInitialState() {
     return {
       items: [],

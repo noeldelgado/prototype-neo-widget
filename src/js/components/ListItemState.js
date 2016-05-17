@@ -1,10 +1,6 @@
 import NeoWidget from './../lib/neo-widget';
 
 export default class ListItemState extends NeoWidget {
-  constructor(config = {}) {
-    super(config);
-  }
-
   getInitialState() {
     return {
       activated: false,

@@ -4,10 +4,6 @@ import NeoWidget from '../lib/neo-widget';
 import VoteItem from '../components/VoteItem';
 
 export default class VoteList extends NeoWidget {
-  constructor(config) {
-    super(config);
-  }
-
   getInitialState() {
     const items = JSON.parse(JSON.stringify(Users.slice(0, 3))).map(item => {
       item.votes = 0;

@@ -5,10 +5,6 @@ import Avatar from '../components/Avatar';
 import { shuffle, swap } from '../lib/utils';
 
 export default class WidgetViewTest extends NeoWidget {
-  constructor(config) {
-    super(config);
-  }
-
   getInitialState() {
     return {
       users: JSON.parse(JSON.stringify(Users.slice())),

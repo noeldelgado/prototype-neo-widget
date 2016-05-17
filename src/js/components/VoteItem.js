@@ -2,10 +2,6 @@ import NeoWidget from './../lib/neo-widget';
 import Avatar from './Avatar';
 
 export default class VoteItem extends NeoWidget {
-  constructor(config = {}) {
-    super(config);
-  }
-
   template() {
     const { item, upVote, downVote } = this.props;
     let className = 'inline-block align-middle bold center';
