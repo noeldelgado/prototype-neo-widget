@@ -1,9 +1,9 @@
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import postcss from 'rollup-plugin-postcss';
+var babel = require('rollup-plugin-babel');
+var commonjs = require('rollup-plugin-commonjs');
+var nodeResolve = require('rollup-plugin-node-resolve');
+var postcss = require('rollup-plugin-postcss');
 
-export default {
+module.exports = {
   entry: 'src/js/main.js',
   format: 'cjs',
   plugins: [

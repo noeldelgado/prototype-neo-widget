@@ -31,9 +31,7 @@
     "virtual-dom": "^2.1.1"
   },
   "tarima": {
-    "plugins": [
-      "${PWD}/_rollup.config.js"
-    ],
+    "rollupFile": "./rollup.config.js",
     "filter": [
       "!**/{components,containers,data,lib}/**"
     ]
