@@ -3,7 +3,7 @@ import Users from '../data/Users';
 import NeoWidget from '../lib/neo-widget';
 import VoteItem from '../components/VoteItem';
 
-export default class UpvoteWidgets extends NeoWidget {
+export default class VoteList extends NeoWidget {
   constructor(config) {
     super(config);
   }
