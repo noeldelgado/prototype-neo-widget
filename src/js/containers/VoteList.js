@@ -25,7 +25,7 @@ export default class UpvoteWidgets extends NeoWidget {
       <div>
         {this.state.items.sort((a, b) => (a.votes < b.votes)).map(item => {
           return (
-            <VoteItem key={`v-${item.uuid}`}
+            <VoteItem key={`vl-${item.uuid}`}
               item={item}
               upVote={this._onUpVote.bind(this, item)}
               downVote={this._onDownVote.bind(this, item)}

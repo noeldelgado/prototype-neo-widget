@@ -11,7 +11,7 @@ export default class WidgetViewTest extends NeoWidget {
 
   getInitialState() {
     return {
-      users: Users,
+      users: JSON.parse(JSON.stringify(Users.slice())),
       showStateCode: false,
     };
   }
@@ -20,7 +20,7 @@ export default class WidgetViewTest extends NeoWidget {
     return (
       <div>
         {this.state.users.map((user) => {
-          return <Avatar key={user.uuid} src={user.avatar} size={20}/>;
+          return <Avatar src={user.avatar} size={20}/>;
         }, this)}
         <div>
           <button ev-click={this._shuffleHandler.bind(this)} className='js-shuffle'>shuffle</button>
