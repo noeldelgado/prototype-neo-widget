@@ -112,6 +112,8 @@ export default class NeoWidget {
    * @param domNode {DOMElement} The HTMLElement associated with the widget that will be removed
    */
   destroy(domNode) {
+    this.componentDidUnMount();
+
     // delete container state by widget keyPath if exists
     const container = this._getContainer();
     const keyPath = this._getKeyPath();
@@ -198,4 +200,8 @@ export default class NeoWidget {
   /* @override
    */
   componentDidMount() {}
+
+  /* @override
+   */
+  componentDidUnMount() {}
 }
