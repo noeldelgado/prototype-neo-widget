@@ -27,10 +27,17 @@ import DOMDelegator from 'dom-delegator';
 export default class NeoWidget {
   static neo = true;
 
+  static _components = {};
+
   static delegator = DOMDelegator({ document: document });
 
+  static setComponents(components) {
+    NeoWidget._components = components;
+  }
+
   static jsx(jsxObject) {
-    const Component = window[jsxObject.elementName];
+    const Component = NeoWidget._components[jsxObject.elementName];
+
     if ((typeof Component === 'function') && (Component.neo === true)) {
       jsxObject.parent = this;
       jsxObject.props = jsxObject.attributes;
