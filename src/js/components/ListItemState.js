@@ -13,6 +13,7 @@ export default class ListItemState extends NeoWidget {
   }
 
   template() {
+    const { item, onDelete } = this.props;
     const styles = {};
     if (this.state.activated) {
       styles.backgroundColor = 'dodgerblue';
@@ -25,9 +26,11 @@ export default class ListItemState extends NeoWidget {
 
     return (
       <div style={styles} className='p1 border-bottom'>
-        <div className='inline-block'>{this.props.item.name}</div>
+        <div className='inline-block'>{item.uuid}</div>
+        <div className='inline-block'>{item.text}</div>
         <button ev-click={this._toggleActivate.bind(this)}>Activate/Deactivate</button>
         <button ev-click={this._toggleEnable.bind(this)}>Enable/Disable</button>
+        <button ev-click={onDelete} className='red'>Delete</button>
       </div>
     );
   }
