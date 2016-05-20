@@ -58,6 +58,7 @@ export default class NeoWidget {
       attributes: null,
       children: null,
       props: null,
+      _latestUpdateChange: null,
     };
   };
 
@@ -95,9 +96,10 @@ export default class NeoWidget {
     let newTree;
     let patches;
 
-    if (Object.keys(previous.state).length) {
+    if (previous._latestUpdateChange) {
       newTree = previous.virtualNode;
       patches = diff(this.virtualNode, newTree);
+      this._latestUpdateChange = previous._latestUpdateChange;
     } else {
       newTree = this.virtualNode;
       patches = diff(previous.virtualNode, newTree);
@@ -134,6 +136,8 @@ export default class NeoWidget {
     if (typeof nextState === 'undefined') return;
 
     Object.assign(this.state, nextState);
+    this._latestUpdateChange = nextState;
+
     const newTree = this.template();
     const patches = diff(this.virtualNode, newTree);
     this.element = patch(this.element, patches);
