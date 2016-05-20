@@ -3,10 +3,16 @@ import NeoWidget from './../lib/neo-widget';
 export default class Overlay extends NeoWidget {
   componentDidMount() {
     document.body.style.overflow = 'hidden';
+
+    this._keyDownHandlerRef = this._keyDownHandler.bind(this);
+    NeoWidget.delegator.addEventListener(document, 'keydown', this._keyDownHandlerRef);
   }
 
   componentDidUnMount() {
     document.body.style.overflow = '';
+
+    NeoWidget.delegator.removeEventListener(document, 'keydown', this._keyDownHandlerRef);
+    this._keyDownHandlerRef = null;
   }
 
   template() {
@@ -26,5 +32,11 @@ export default class Overlay extends NeoWidget {
         <h1>Overlay</h1>
       </div>
     );
+  }
+
+  _keyDownHandler(ev) {
+    if (ev.keyCode === 27) {
+      this.props.onClose();
+    }
   }
 }
