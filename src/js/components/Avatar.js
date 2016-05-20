@@ -1,6 +1,12 @@
 import NeoWidget from './../lib/neo-widget';
 
 export default class Avatar extends NeoWidget {
+  getInitialState() {
+    return {
+      activated: false,
+    };
+  }
+
   getDefaultProps() {
     return {
       src: '/public/assets/images/Blank.gif',
@@ -10,12 +16,23 @@ export default class Avatar extends NeoWidget {
 
   template() {
     const { src, size, className = '' } = this.props;
-    const _className = 'inline-block ' + className;
+    const _className = 'inline-block circle ' + className;
+    let styles = {};
+
+    if (this.state.activated) {
+      styles.backgroundColor = 'yellowgreen';
+    }
 
     return (
-      <div className={_className}>
-        <img className='py1 mr1 circle' src={src} width={size} height={size}/>
+      <div className={_className} style={styles} ev-click={this._handleClick.bind(this)}>
+        <img className='p1 circle align-top' src={src} width={size} height={size}/>
       </div>
     );
+  }
+
+  _handleClick() {
+    this.setState({
+      activated: !this.state.activated,
+    });
   }
 }
