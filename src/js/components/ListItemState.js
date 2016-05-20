@@ -1,4 +1,5 @@
 import NeoWidget from './../lib/neo-widget';
+import Avatar from './Avatar';
 
 export default class ListItemState extends NeoWidget {
   getInitialState() {
@@ -10,7 +11,9 @@ export default class ListItemState extends NeoWidget {
 
   template() {
     const { item, onDelete } = this.props;
-    const styles = {};
+    let avatarPath = '/public/assets/images/defaults/users/' + item.avatar;
+    let styles = {};
+
     if (this.state.activated) {
       styles.backgroundColor = 'dodgerblue';
       styles.color = 'white';
@@ -22,7 +25,7 @@ export default class ListItemState extends NeoWidget {
 
     return (
       <div style={styles} className='p1 border-bottom'>
-        <div className='inline-block'>{item.uuid}</div>
+        <Avatar src={avatarPath} size={20} className='align-middle' />
         <div className='inline-block'>{item.text}</div>
         <button ev-click={this._toggleActivate.bind(this)}>Activate/Deactivate</button>
         <button ev-click={this._toggleEnable.bind(this)}>Enable/Disable</button>

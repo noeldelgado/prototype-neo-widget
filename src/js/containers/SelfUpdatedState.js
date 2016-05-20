@@ -1,5 +1,6 @@
 import NeoWidget from '../lib/neo-widget';
 import ListItemState from '../components/ListItemState';
+import { getRandomInt } from '../lib/utils';
 
 export default class SelfContainedWidgets extends NeoWidget {
   getInitialState() {
@@ -36,6 +37,7 @@ export default class SelfContainedWidgets extends NeoWidget {
     const newItem = {
       text: this.inputElement.value,
       uuid: Date.now(),
+      avatar: `0${getRandomInt(1, 9)}.jpg`,
     };
     const nextItems = this.state.items.concat([newItem]);
 

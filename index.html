@@ -11,7 +11,7 @@
   <div id='sample-1' class='sample-box'>
     <h3 class='mt0'>Avatars list</h3>
     <ul class="sample-info">
-      <li>1st level items list + 1st level event listeners</li>
+      <li>1st level items list + 1st level event listeners + children state</li>
     </ul>
     <div class='widget'></div>
   </div>
@@ -20,18 +20,18 @@
     <h3 class="mt0">Vote list</h3>
     <ul class="sample-info">
       <li>Children communication with container to update state via props</li>
-      <li>Each children has two event listeners</li>
+      <li>Each children has two event listeners and 1 nested component</li>
     </ul>
     <div class='widget'></div>
   </div>
 
   <div id='sample-3' class='sample-box'>
-    <h3 class="mt0">Self updated state</h3>
+    <h3 class="mt0">Self contained state</h3>
     <ul class='sample-info'>
-      <li>Each list item will update “itself” via <code>setState</code></li>
-      <li>The parent.state will be modified to hold that individual state too (using a keyPath-like format)</li>
-      <li>The parent will run a new diff/patch of its tree</li>
-      <li>The children will check if its parent holds its keyPath record and merge it into its current state</li>
+      <li><del>Each list item will update “itself” via <code>setState</code></del></li>
+      <li><del>The parent.state will be modified to hold that individual state too (using a keyPath-like format)</del></li>
+      <li><del>The parent will run a new diff/patch of its tree</li>
+      <li><del>The children will check if its parent holds its keyPath record and merge it into its current state</del></li>
     </ul>
     <div class='widget'></div>
   </div>
