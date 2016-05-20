@@ -39,7 +39,6 @@ export default class NeoWidget {
     const Component = NeoWidget._components[jsxObject.elementName];
 
     if ((typeof Component === 'function') && (Component.neo === true)) {
-      jsxObject.parent = this;
       jsxObject.props = jsxObject.attributes;
 
       if (jsxObject.attributes.key) {
@@ -56,9 +55,9 @@ export default class NeoWidget {
     return {
       elementName: 'DIV',
       type: 'Widget',
-      attributes: {},
-      children: [],
-      props: {},
+      attributes: null,
+      children: null,
+      props: null,
     };
   };
 
@@ -67,17 +66,10 @@ export default class NeoWidget {
     Object.assign(this, { state: this.getInitialState() });
     this.props = Object.assign(this.getDefaultProps(), this.props);
 
-    const container = this._getContainer();
-    const keyPath = this._getKeyPath();
-    const newState = container.state[keyPath];
-    if (newState) {
-      Object.assign(this.state, newState);
-    }
-
     this.virtualNode = this.template();
     this.element = create(this.virtualNode, { document: document });
 
-    if (!this.parent) {
+    if (this.isRoot) {
       this.componentDidMount();
     }
   }
@@ -100,8 +92,17 @@ export default class NeoWidget {
    * @param domNode {DOMElement} The previous DOM Element associated with this widget
    */
   update(previous, domNode) {
-    const newTree = this.virtualNode;
-    const patches = diff(previous.virtualNode, newTree);
+    let newTree;
+    let patches;
+
+    if (Object.keys(previous.state).length) {
+      newTree = previous.virtualNode;
+      patches = diff(this.virtualNode, newTree);
+    } else {
+      newTree = this.virtualNode;
+      patches = diff(previous.virtualNode, newTree);
+    }
+
     this.element = patch(domNode, patches);
     this.virtualNode = newTree;
   }
@@ -113,47 +114,8 @@ export default class NeoWidget {
    */
   destroy(domNode) {
     this.componentDidUnMount();
-
-    // delete container state by widget keyPath if exists
-    const container = this._getContainer();
-    const keyPath = this._getKeyPath();
-    if (container.state[keyPath]) {
-      delete container.state[keyPath];
-    }
-
     this.virtualNode = null;
     this.element = null;
-  }
-
-  _getContainer() {
-    var _this = this;
-    while (_this.parent) _this = _this.parent;
-    return _this;
-  }
-
-  _getKeyPath() {
-    var _this = this;
-    var key = _this.elementName + '.' + (_this.props.key || _this.key);;
-    while (_this.parent) {
-      _this = _this.parent;
-      key += '.' + _this.elementName + '.' + (_this.props.key || _this.key);;
-    }
-
-    return key;
-  }
-
-  /* Performs a merge of nextState into current state, then creates a diff/patch.
-   * @private
-   * @param nextState {Object}
-   */
-  _update(nextState) {
-    if (typeof nextState === 'undefined') return;
-
-    Object.assign(this.state, nextState);
-    const newTree = this.template();
-    const patches = diff(this.virtualNode, newTree);
-    this.element = patch(this.element, patches);
-    this.virtualNode = newTree;
   }
 
   render(element) {
@@ -169,20 +131,13 @@ export default class NeoWidget {
    * @usage setState({mykey: 'my new value'})
    */
   setState(nextState) {
-    if (!this.parent) {
-      return this._update(nextState);
-    }
+    if (typeof nextState === 'undefined') return;
 
-    const container = this._getContainer();
-    const keyPath = this._getKeyPath();
-
-    if (container.state[keyPath]) {
-      Object.assign(container.state[keyPath], nextState);
-    } else {
-      container.state[keyPath] = nextState;
-    }
-
-    container._update(container.state);
+    Object.assign(this.state, nextState);
+    const newTree = this.template();
+    const patches = diff(this.virtualNode, newTree);
+    this.element = patch(this.element, patches);
+    this.virtualNode = newTree;
   }
 
   /* @override
