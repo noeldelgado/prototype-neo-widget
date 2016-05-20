@@ -16,7 +16,7 @@ export default class WidgetViewTest extends NeoWidget {
     return (
       <div>
         {this.state.users.map((user) => {
-          return <Avatar src={user.avatar} size={20}/>;
+          return <Avatar key={`al-${user.uuid}`} src={user.avatar} size={20}/>;
         }, this)}
         <div>
           <button ev-click={this._shuffleHandler.bind(this)} className='js-shuffle'>shuffle</button>
