@@ -25,8 +25,6 @@ export default class SelfContainedWidgets extends NeoWidget {
           <input />
           <button>Add #{this.state.items.length + 1}</button>
         </form>
-        <button ev-click={this._toggleState.bind(this)} className='mt2'>toggle state code</button>
-        {this._showStateCode()}
       </div>
     );
   }
@@ -59,18 +57,5 @@ export default class SelfContainedWidgets extends NeoWidget {
     this.setState({
       items: arr,
     });
-  }
-
-  _toggleState() {
-    this.setState({
-      showStateCode: !this.state.showStateCode,
-    });
-  }
-
-  _showStateCode() {
-    if (this.state.showStateCode) {
-      return (<pre className='sample-code'>
-        <code>{JSON.stringify(this.state, null, 2)}</code></pre>);
-    }
   }
 }

@@ -28,8 +28,6 @@ export default class VoteList extends NeoWidget {
             />
           );
         }, this)}
-        <button ev-click={this._toggleState.bind(this)} className='mt2'>toggle state code</button>
-        {this._showStateCode()}
       </div>
     );
   }
@@ -46,18 +44,5 @@ export default class VoteList extends NeoWidget {
     this.setState({
       items: this.state.items,
     });
-  }
-
-  _toggleState() {
-    this.setState({
-      showStateCode: !this.state.showStateCode,
-    });
-  }
-
-  _showStateCode() {
-    if (this.state.showStateCode) {
-      return (<pre className='sample-code'>
-        <code>{JSON.stringify(this.state, null, 2)}</code></pre>);
-    }
   }
 }
