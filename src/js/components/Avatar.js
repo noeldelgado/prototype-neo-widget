@@ -7,6 +7,10 @@ export default class Avatar extends NeoWidget {
     };
   }
 
+  shouldComponentUpdate(previousState) {
+    return previousState.activated !== this.state.activated;
+  }
+
   getDefaultProps() {
     return {
       src: '/public/assets/images/Blank.gif',

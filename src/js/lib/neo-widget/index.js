@@ -96,6 +96,10 @@ export default class NeoWidget {
     let newTree;
     let patches;
 
+    if (!this.shouldComponentUpdate(previous.state)) {
+      return;
+    }
+
     if (previous._latestUpdateChange) {
       newTree = previous.virtualNode;
       patches = diff(this.virtualNode, newTree);
@@ -163,4 +167,8 @@ export default class NeoWidget {
   /* @override
    */
   componentDidUnMount() {}
+
+  /* @override
+   */
+  shouldComponentUpdate(previousState) { return true; }
 }

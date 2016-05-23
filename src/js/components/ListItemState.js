@@ -9,6 +9,12 @@ export default class ListItemState extends NeoWidget {
     };
   }
 
+  shouldComponentUpdate(previousState) {
+    const a = (previousState.activated !== this.state.activated);
+    const d = (previousState.disabled !== this.state.disabled);
+    return a && d;
+  }
+
   template() {
     const { item, onDelete } = this.props;
     let avatarPath = '/public/assets/images/defaults/users/' + item.avatar;
