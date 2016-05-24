@@ -93,24 +93,15 @@ export default class NeoWidget {
    * @param domNode {DOMElement} The previous DOM Element associated with this widget
    */
   update(previous, domNode) {
-    let newTree;
-    let patches;
+    if (previous._latestUpdateChange) return;
+    if (this.shouldComponentUpdate(previous.state) === false) return;
 
-    if (!this.shouldComponentUpdate(previous.state)) {
-      return;
-    }
-
-    if (previous._latestUpdateChange) {
-      newTree = previous.virtualNode;
-      patches = diff(this.virtualNode, newTree);
-      this._latestUpdateChange = previous._latestUpdateChange;
-    } else {
-      newTree = this.virtualNode;
-      patches = diff(previous.virtualNode, newTree);
-    }
-
+    let newTree = this.virtualNode;
+    let patches = diff(previous.virtualNode, newTree);
     this.element = patch(domNode, patches);
     this.virtualNode = newTree;
+
+    newTree = patches = null;
   }
 
   /* Required by virtual-dom.
@@ -140,12 +131,14 @@ export default class NeoWidget {
     if (typeof nextState === 'undefined') return;
 
     Object.assign(this.state, nextState);
-    this._latestUpdateChange = nextState;
+    this._latestUpdateChange = true;
 
-    const newTree = this.template();
-    const patches = diff(this.virtualNode, newTree);
+    let newTree = this.template();
+    let patches = diff(this.virtualNode, newTree);
     this.element = patch(this.element, patches);
     this.virtualNode = newTree;
+
+    newTree = patches = null;
   }
 
   /* @override
