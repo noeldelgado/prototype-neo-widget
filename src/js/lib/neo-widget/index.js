@@ -25,11 +25,9 @@ import { h, create, diff, patch } from 'virtual-dom';
 import DOMDelegator from 'dom-delegator';
 
 export default class NeoWidget {
-  static neo = true;
-
   static _components = {};
 
-  static delegator = DOMDelegator({ document: document });
+  static delegator = DOMDelegator({ document });
 
   static setComponents(components) {
     NeoWidget._components = components;
@@ -38,37 +36,26 @@ export default class NeoWidget {
   static jsx(jsxObject) {
     const Component = NeoWidget._components[jsxObject.elementName];
 
-    if ((typeof Component === 'function') && (Component.neo === true)) {
-      jsxObject.props = jsxObject.attributes;
-
-      if (jsxObject.attributes.key) {
-        jsxObject.key = jsxObject.props.key;
-      }
-
+    if (typeof Component === 'function') {
       return new Component(jsxObject);
     }
 
     return h(jsxObject.elementName, jsxObject.attributes, jsxObject.children);
   };
 
-  static _defaults() {
-    return {
-      elementName: 'DIV',
-      type: 'Widget',
-      attributes: null,
-      children: null,
-      props: null,
-      _latestUpdateChange: null,
-    };
-  };
-
   constructor(config = {}) {
-    Object.assign(this, NeoWidget._defaults(), config);
-    Object.assign(this, { state: this.getInitialState() });
-    this.props = Object.assign(this.getDefaultProps(), this.props);
+    this.type = 'Widget';
+    Object.assign(this, config);
+    this.state = this.getInitialState();
+    this.props = Object.assign(this.getDefaultProps(), this.attributes);
+    this._latestUpdateChange = null;
+
+    if (typeof this.props.key !== 'undefined') {
+      this.key = this.props.key;
+    }
 
     this.virtualNode = this.template();
-    this.element = create(this.virtualNode, { document: document });
+    this.element = create(this.virtualNode, { document });
 
     if (this.isRoot) {
       this.componentDidMount();
@@ -94,7 +81,7 @@ export default class NeoWidget {
    */
   update(previous, domNode) {
     if (previous._latestUpdateChange) return;
-    if (this.shouldComponentUpdate(previous.state) === false) return;
+    if (!this.shouldComponentUpdate(previous.state, previous.props)) return;
 
     let newTree = this.virtualNode;
     let patches = diff(previous.virtualNode, newTree);
@@ -129,6 +116,7 @@ export default class NeoWidget {
    */
   setState(nextState) {
     if (typeof nextState === 'undefined') return;
+    if (!this.shouldComponentUpdate(nextState, this.props)) return;
 
     Object.assign(this.state, nextState);
     this._latestUpdateChange = true;
@@ -163,5 +151,5 @@ export default class NeoWidget {
 
   /* @override
    */
-  shouldComponentUpdate(previousState) { return true; }
+  shouldComponentUpdate(previousState, previousProps) { return true; }
 }
