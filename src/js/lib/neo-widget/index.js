@@ -43,6 +43,12 @@ export default class NeoWidget {
     return h(jsxObject.elementName, jsxObject.attributes, jsxObject.children);
   };
 
+  static render(component, element) {
+    element.appendChild(component.element);
+    component.componentDidMount();
+    return component;
+  }
+
   constructor(config = {}) {
     this.type = 'Widget';
     Object.assign(this, config);
@@ -56,10 +62,11 @@ export default class NeoWidget {
 
     this.virtualNode = this.template();
     this.element = create(this.virtualNode, { document });
+  }
 
-    if (this.isRoot) {
-      this.componentDidMount();
-    }
+  render(element) {
+    element.appendChild(this.element);
+    return this;
   }
 
   /* Required by virtual-dom.
@@ -100,11 +107,6 @@ export default class NeoWidget {
     this.componentDidUnMount();
     this.virtualNode = null;
     this.element = null;
-  }
-
-  render(element) {
-    element.appendChild(this.element);
-    return this;
   }
 
   /* Calls the _update method of its parent passing the nextState.
