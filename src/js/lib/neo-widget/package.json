@@ -3,10 +3,16 @@
   "name": "neo-widget",
   "version": "0.0.1",
   "description": "Virtual DOM implementation",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "prepublish": "npm run build"
   },
   "author": "Noel Delgado <auhcsei@gmail.com> (http://pixelia.me)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "buble": "^0.10.2",
+    "rollup": "^0.26.3",
+    "rollup-plugin-buble": "^0.10.0"
+  }
 }
