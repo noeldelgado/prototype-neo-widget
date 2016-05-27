@@ -25,14 +25,18 @@ import { h, create, diff, patch } from 'virtual-dom';
 import DOMDelegator from 'dom-delegator';
 
 export default class NeoWidget {
+  /** @private */
   static _components = {};
 
+  /** @public */
   static delegator = DOMDelegator({ document });
 
+  /** @public */
   static setComponents(components) {
     NeoWidget._components = components;
   }
 
+  /** @public */
   static jsx(jsxObject) {
     const Component = NeoWidget._components[jsxObject.elementName];
 
@@ -43,6 +47,7 @@ export default class NeoWidget {
     return h(jsxObject.elementName, jsxObject.attributes, jsxObject.children);
   };
 
+  /** @public */
   static render(component, element) {
     element.appendChild(component.element);
     component.componentDidMount();
@@ -64,15 +69,10 @@ export default class NeoWidget {
     this.element = create(this.virtualNode, { document });
   }
 
-  render(element) {
-    element.appendChild(this.element);
-    return this;
-  }
-
   /* Required by virtual-dom.
    * The function called when the widget is being created.
    * Should return a DOM Element.
-   * @private, @protected
+   * @private
    * @return DOMElement
    */
   init() {
@@ -82,7 +82,7 @@ export default class NeoWidget {
 
   /* Required by virtual-dom.
    * The function called when the widget is being updated.
-   * @private, @protected
+   * @private
    * @param previous {Object} The previous Widget
    * @param domNode {DOMElement} The previous DOM Element associated with this widget
    */
@@ -100,7 +100,7 @@ export default class NeoWidget {
 
   /* Required by virtual-dom.
    * The function called when the widget is being removed from the dom.
-   * @protected, @override
+   * @protected
    * @param domNode {DOMElement} The HTMLElement associated with the widget that will be removed
    */
   destroy(domNode) {
@@ -112,7 +112,7 @@ export default class NeoWidget {
   /* Calls the _update method of its parent passing the nextState.
    * If it has no parent then it will run the _update method on itself
    * otherwise it will update the state of its parent before calling _update.
-   * @public
+   * @protected
    * @param nextState {Object}
    * @usage setState({mykey: 'my new value'})
    */
@@ -131,27 +131,29 @@ export default class NeoWidget {
     newTree = patches = null;
   }
 
-  /* @override
+  /* @abstract
    */
   getInitialState() { return {}; }
 
-  /* @override
+  /* @abstract
    */
   getDefaultProps() { return {}; }
 
-  /* @override
+  /* @abstract
    */
   template() { return h('div'); }
 
-  /* @override
+  /* @abstract
    */
   componentDidMount() {}
 
-  /* @override
+  /* @abstract
    */
   componentDidUnMount() {}
 
-  /* @override
+  /* @abstract
+   * @param {Object} previousState
+   * @param {Object} previousProps
    */
   shouldComponentUpdate(previousState, previousProps) { return true; }
 }
