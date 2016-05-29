@@ -21,7 +21,7 @@
     "rollup-plugin-node-resolve": "^1.5.0",
     "rollup-plugin-postcss": "0.0.27",
     "tarima-browser-sync": "^0.1.1",
-    "tarima-cli": "gextech/tarima-cli#next"
+    "tarima-cli": "^0.1.0"
   },
   "dependencies": {
     "basscss": "^8.0.1",
