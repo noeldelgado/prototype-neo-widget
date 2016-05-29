@@ -109,9 +109,9 @@ export default class NeoWidget {
     this.element = null;
   }
 
-  /* Calls the _update method of its parent passing the nextState.
-   * If it has no parent then it will run the _update method on itself
-   * otherwise it will update the state of its parent before calling _update.
+  /* Extends the instance’s @state property with the passed nextState.
+   * Creates a new diff/patch of the new tree representation.
+   * This will make virtual-dom to run the private update method.
    * @protected
    * @param nextState {Object}
    * @usage setState({mykey: 'my new value'})
@@ -140,6 +140,7 @@ export default class NeoWidget {
   getDefaultProps() { return {}; }
 
   /* @abstract
+   * @return virtualTree
    */
   template() { return h('div'); }
 
@@ -154,6 +155,7 @@ export default class NeoWidget {
   /* @abstract
    * @param {Object} previousState
    * @param {Object} previousProps
+   * @return {Boolean} [true]
    */
   shouldComponentUpdate(previousState, previousProps) { return true; }
 }
