@@ -25,35 +25,6 @@ import { h, create, diff, patch } from 'virtual-dom';
 import DOMDelegator from 'dom-delegator';
 
 export default class NeoWidget {
-  /** @private */
-  static _components = {};
-
-  /** @public */
-  static delegator = DOMDelegator({ document });
-
-  /** @public */
-  static setComponents(components) {
-    NeoWidget._components = components;
-  }
-
-  /** @public */
-  static jsx(jsxObject) {
-    const Component = NeoWidget._components[jsxObject.elementName];
-
-    if (typeof Component === 'function') {
-      return new Component(jsxObject);
-    }
-
-    return h(jsxObject.elementName, jsxObject.attributes, jsxObject.children);
-  };
-
-  /** @public */
-  static render(component, element) {
-    element.appendChild(component.element);
-    component.componentDidMount();
-    return component;
-  }
-
   constructor(config = {}) {
     this.type = 'Widget';
     Object.assign(this, config);
@@ -159,3 +130,33 @@ export default class NeoWidget {
    */
   shouldComponentUpdate(previousState, previousProps) { return true; }
 }
+
+/** @private */
+NeoWidget._components = {};
+
+/** @protected */
+NeoWidget.jsx = function (jsxObject) {
+  const Component = NeoWidget._components[jsxObject.elementName];
+
+  if (typeof Component === 'function') {
+    return new Component(jsxObject);
+  }
+
+  return h(jsxObject.elementName, jsxObject.attributes, jsxObject.children);
+};
+
+/** @public */
+NeoWidget.delegator = DOMDelegator({ document });
+
+/** @public */
+NeoWidget.setComponents = function (components) {
+  NeoWidget._components = components;
+};
+
+/** @public */
+NeoWidget.render = function (component, element) {
+  element.appendChild(component.element);
+  component.componentDidMount();
+  return component;
+};
+
