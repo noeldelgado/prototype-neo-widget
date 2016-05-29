@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "description": "Virtual DOM implementation",
   "main": "lib/index.js",
+  "jsnext:main": "index.js",
   "scripts": {
     "build": "rollup -c",
     "prepublish": "npm run build"
@@ -13,6 +14,9 @@
   "devDependencies": {
     "buble": "^0.10.2",
     "rollup": "^0.26.3",
-    "rollup-plugin-buble": "^0.10.0"
+    "rollup-plugin-buble": "^0.10.0",
+    "rollup-plugin-commonjs": "^2.2.1",
+    "rollup-plugin-node-resolve": "^1.5.0",
+    "rollup-plugin-uglify": "^0.3.1"
   }
 }
